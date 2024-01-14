@@ -1,0 +1,129 @@
+#include"library.h"
+#include<string>
+using namespace std;
+
+
+void main()
+{
+	//get time
+	int time=get_clock_time();
+	int date=get_calendar_date();
+	int hour=time/10000;
+	int mintue=(time/100)-(hour*100);
+	int second=time-(time/100)*100;
+	int year=date/10000;
+	int month=date/100-year*100;
+	int day=date-date/100*100;
+	cout<<"date:"<<year<<"-"<<month<<"-"<<day<<endl;
+	int hour12;
+	if(hour>=12)
+		hour12=hour-12;
+	else
+		hour12=hour;
+	if(hour>=12)
+		cout<<"time:"<<hour12<<"-"<<mintue<<"p.m.";
+	else
+		cout<<"time:"<<hour12<<":"<<mintue<<"a.m.";
+	cout<<second;
+
+	//draw clock
+	int xo=275;
+	int yo=375;
+	int r=175;
+	int i;
+	double p=3.05432;
+	const double Pi=3.1415926;
+	make_window(550,750);
+	move_to(xo,yo);
+	move_to(xo,yo-r);
+	set_heading_degrees(90);
+	set_pen_width(3);
+	for(i=0;i<=360;i=i+1)
+	{
+		draw_distance(p);
+		turn_right_by_degrees(1);
+		if(i%30==0)
+		{
+			turn_right_by_degrees(90);
+			draw_distance(10);
+			turn_left_by_degrees (180);
+			move_distance(10);
+			turn_right_by_degrees (90);
+		}
+	}
+
+
+	//animate clock
+	int mm,hh,ss,sss,mmm,hhh;
+	mm=mintue;
+	hh=hour12;
+	for(ss=second;ss<888;ss++)
+	{
+		sss=ss-1;
+		mmm=mm;
+		hhh=hh;
+		if(ss%60==0)
+		{
+			mm++;
+			mmm=mm-1;
+		}
+		if(mm%60==0)
+		{
+			hh++;
+			hhh=hh-1;
+		}
+		set_pen_color(color::white);
+		//draw white hand
+		int m;
+		move_to(xo,yo);
+		set_heading_degrees(0);
+		for(m=0;m<mmm;m++)
+		turn_right_by_degrees(6);
+		set_pen_width(6);
+		draw_distance(140);
+		int h,h1;
+		move_to(xo,yo);
+		set_heading_degrees(0);
+		for(h=0;h<hhh;h++)
+			turn_right_by_degrees(30);
+		for(h1=0;h1<mmm;h1++)
+			turn_right_by_degrees(0.5);
+		set_pen_width(8);
+		draw_distance(100);
+		int s;
+		move_to(xo,yo);
+		set_heading_degrees(0);
+		for(s=0;s<sss;s++)
+		turn_right_by_degrees(1);
+		set_pen_width(2);
+		draw_distance(160);
+
+		//draw mintue hand
+	    set_pen_color(color::black);
+		move_to(xo,yo);
+		set_heading_degrees(0);
+		for(m=0;m<mm;m++)
+		turn_right_by_degrees(6);
+		set_pen_width(6);
+		draw_distance(140);
+
+		//draw hour hand
+		move_to(xo,yo);
+		set_heading_degrees(0);
+		for(h=0;h<hh;h++)
+			turn_right_by_degrees(30);
+		for(h1=0;h1<mintue;h1++)
+			turn_right_by_degrees(0.5);
+		set_pen_width(8);
+		draw_distance(100);
+
+		//draw second hand
+		move_to(xo,yo);
+		set_heading_degrees(0);
+		for(s=0;s<ss;s++)
+		turn_right_by_degrees(1);
+		set_pen_width(2);
+		draw_distance(160);
+		sleep(1);
+	}
+}
