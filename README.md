@@ -1,3 +1,6 @@
+// based on visual studio 2012
+// C++ programming
+
 // it must include file "library.h"
 // run and produce a window
 // it produce a clock which can run like a real one
